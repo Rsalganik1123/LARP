@@ -1,11 +1,32 @@
+This is the official repository for KDD 2024 submission *LARP: Language Audio Relational Pre-training for Cold-Start Playlist Continuation* <URL> 
+
+If you use this codebase please cite us using: 
+```
+@inproceedings{LARP2024,
+  author    = {Rebecca Salganik and
+               Xiaohao Liu and
+               Jian Kang and
+               Yunshan Ma and
+               Tat{-}Seng Chua},
+  title     = {LARP: Language Audio Relational Pre-training 
+                for Cold-Start Playlist Continuation},
+  booktitle = {{KDD}},
+  publisher = {{ACM}},
+  year      = {2024}
+}
+```
+
+# Table of Contents 
+- Building environment 
+- Building datasets from scratch 
+- Accessing checkpoints 
+- Training the models 
+
 # Building Environment
-
-
-# Running our Code 
-TBD 
-
-# Accessing Checkpoints 
-TBD 
+We find that installing in two phases was most effective for package compatibility. 
+1. Run ``` conda env create --name envname --file=/KDD2024-LARP/environment_setup/conda.yml```
+2. Activate env. Run ```pip install  /KDD2024-LARP/environment_setup/pip.txt ``` 
+ 
 
 # Dataset Building  
 Since this dataloading procedure is very time consuming, we have provided piecewise code and a full service script.
@@ -82,3 +103,9 @@ project_folder
 | -- LFM/ 
 		| ... 
 ```
+
+# Accessing Checkpoints 
+TBD
+
+# Training from Scratch 
+TBD
