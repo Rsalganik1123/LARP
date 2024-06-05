@@ -24,10 +24,10 @@ from torch.nn.parallel import DistributedDataParallel as DDP
 from torch.utils.tensorboard import SummaryWriter
 from tqdm import tqdm 
 
-from parser_unified import parse_args
+from parser import parse_args
 from utils import warmup_lr_schedule, step_lr_schedule, move_data_to_device, EarlyStopping, cosine_lr
 import utils
-from data_unified import Datasets
+from data import Datasets
 
 from models.larp import LARP, forward_and_backward 
 
@@ -60,19 +60,6 @@ def gather_features(args, model, dataloader, device):
     caption_emb = torch.concatenate(caption_emb)
     
     return audio_emb, caption_emb, uris
-
-def ret_evaluate(args, config, device, model, blap_dataset, mode, features=None, uris=None): 
-    if features == None: 
-        feature_dataloader = blap_dataset.valid_dataloader if mode == 'valid' else blap_dataset.test_dataloader
-        audio_emb, caption_emb, uris = gather_features(args, model = model, dataloader = feature_dataloader, device=device)
-        print(f'loaded: audio emb:{audio_emb.shape}, caption emb: {caption_emb.shape}')
-     
-    t2a_metrics = t2a(config, audio_emb, caption_emb)
-    a2t_metrics = a2t(config, audio_emb, caption_emb)
-    metrics = {**t2a_metrics, **a2t_metrics}
-    # decision_metric = t2a_metrics[config['EVALUATION']['RETRIEVAL']['decision_metric']]
-    decision_metric = t2a_metrics[config['EVALUATION']['RETRIEVAL']['decision_metric']][config['EVALUATION']['RETRIEVAL']['decision_index']]
-    return t2a_metrics, decision_metric #, a2t_metrics
 
 def rec_evaluate(args, config, device, model, blap_dataset, rec_dataset, mode, features = None, uris=None, save_feat=False): 
     if features == None: 
@@ -299,8 +286,7 @@ def distributed_main(rank, world_size, args):
 
             if epoch % args.validation_interval == 0: #run validation 
                 print("validation")
-                if 'bundle' in args.eval_mode:
-                     
+                if 'bundle' in args.eval_mode: 
                     rec_validation_stats, rec_decision_metric = rec_evaluate(args, config, device, ddp_model.module, dataset, valid_dataset, mode='test')
                     utils.log_stats(rec_validation_stats, 'test', epoch, log_path, eval_mode='bundle')
                     for metric_name in rec_validation_stats:
@@ -308,17 +294,9 @@ def distributed_main(rank, world_size, args):
                             name = f"rec_valid/{metric_name}@{topk}"
                             val = rec_validation_stats[metric_name][topk]
                             run.add_scalar(name, val, epoch)
-                if 'retrieval' in args.eval_mode: 
-                    ret_validation_stats, ret_decision_metric = ret_evaluate(args, config, device, ddp_model.module, dataset, mode='test')
-                    utils.log_stats(ret_validation_stats, 'test', epoch, log_path, eval_mode='retrieval')
-                    for metric_name in ret_validation_stats:
-                        for topk in ret_validation_stats[metric_name]:
-                            name = f"ret_valid/{metric_name}@{topk}"
-                            val = ret_validation_stats[metric_name][topk]
-                            run.add_scalar(name, val, epoch)
-                    
-                final_decision_metric = rec_decision_metric if args.decision_metric == 'bundle' else ret_decision_metric
-                final_validation_stats = rec_validation_stats if args.decision_metric == 'bundle' else ret_validation_stats
+                
+                final_decision_metric = rec_decision_metric 
+                final_validation_stats = rec_validation_stats 
                 early_stopper.update(config, final_decision_metric, ddp_model.module, optimizer, best_results_path, final_validation_stats, epoch)
             
         dist.barrier() #make sure all distributed models are in sync before next epoch       
