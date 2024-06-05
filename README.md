@@ -28,15 +28,20 @@ We find that installing in two phases was most effective for package compatibili
 2. Activate env. Run ```pip install  /KDD2024-LARP/environment_setup/pip.txt ``` 
  
 
-# Dataset Building  
-Since this dataloading procedure is very time consuming, we have provided piecewise code and a full service script.
+# Dataset Building 
+Unfortunately, due to legal restrictions we cannot post the mp3 files that were used during our training. However, we provide all of the elements necessary to recreate our code exactly. If you have any issues please feel free to reach out to our primary author, Rebecca Salganik. 
+
+We store the exact song-caption pairs in the ```datasets/``` folder of this repository. These uris can be used in tandem with the code in the ```databuild_utils/``` to download the mp3. Furthermore, to replicate the truncation procedure we store the exact start and end of each 10 second sample using the keys ```start``` and ```end```. 
+
+In order to facilitate your audio loading, we provide two versions of the code - one that can be batched using a scheduler such as SLURM and another which can be done slowly on a personal computer. 
  
 ## Full service script 
-- you can run ```KDD2024-LARP/clean_databuild/runner.sh```
+- you can run ```KDD2024-LARP/databuild_utils/runner.sh```
     - NOTE: you will need to manually change some paths in the runner.sh file. 
         - ```track_path```: should be the exact location of the tracks.csv file 
         - ```interaction_path```: should be the exact location of interaction.csv file 
         - ```data_folder```: should be the ```<project_folder>``` where you plan store all the data. This doesn't have be inside KDD2024-LARP. 
+        
 ## Piecewise dataloading procedure 
 1. Downloading original data
     - LFM 
@@ -45,18 +50,18 @@ Since this dataloading procedure is very time consuming, we have provided piecew
         - Run ```bzip2 -d filename.bz2``` to unzip files
             - NOTE: the files are large so this may take a few minutes (especially for the interactions).
         - Rename files to follow proper structure: 
-            - run ```KDD2024-LARP/clean_databuild/extractions/tsv_to_csv.py -t <track path> -i <interaction path> -o <data_folder>```
+            - run ```KDD2024-LARP/databuild_utils/extractions/tsv_to_csv.py -t <track path> -i <interaction path> -o <data_folder>```
     - MPD 
         - Download data from: https://www.aicrowd.com/challenges/spotify-million-playlist-dataset-challenge/dataset_files 
             - NOTE: you will need to make an account. 
             - NOTE: download both train and test sets. 
         - Rename files to follow propeor structure: 
-            - run ```KDD2024-LARP/clean_databuild/extractions/json_to_csv.py```
+            - run ```KDD2024-LARP/databuild_utils/extractions/json_to_csv.py```
 2. Create dataset splits:  
     - run ```KDD2024-LARP/dataset_build/generate_splits.py --train_size 100_000 —valid_size 1_000 —test_size 1_000 —min_playlist_length 10 —project_folder <output_folder from previous step>```
 3. Setup spotify credentials: 
     - Make an account here: https://developer.spotify.com/dashboard
-    - Create a file ```/KDD2024-LARP/clean_build/secret.py``` where you store your ```client secret``` and ```client id```: 
+    - Create a file ```/KDD2024-LARP/databuild_utils/secret.py``` where you store your ```client secret``` and ```client id```: 
         ```
         spotify_client_secret = <secret here> 
         spotify_client_id = <id here> 
