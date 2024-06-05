@@ -1084,7 +1084,7 @@ if __name__ == "__main__":
         args.session_name = "_trunc"
 
     config = yaml.safe_load(open('/home/rebecca/BLAP_test/configs/config2.yaml', 'r'))
-    base_config = config['MODELS']['BASE_MODELS']['BLAP']
+    base_config = config['MODELS']['BASE_MODELS']['LARP']
     audio_config = config['MODELS']['AUDIO_MODELS']['HTSAT']
     text_config = config['MODELS']['LANGUAGE_MODELS']['BERT']
     os.environ['CUDA_VISIBLE_DEVICES'] = args.gpu

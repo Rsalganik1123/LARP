@@ -27,16 +27,15 @@ from tqdm import tqdm
 from parser_unified import parse_args
 from utils import warmup_lr_schedule, step_lr_schedule, move_data_to_device, EarlyStopping, cosine_lr
 import utils
-# from scheduler_clap import cosine_lr
-# from data_cip import Datasets
 from data_unified import Datasets
 
-from models.blip_unified import LARP, forward_and_backward # , playlist_feature_update
-from models.clap import clap_audio 
+from models.larp import LARP, forward_and_backward 
 
-import evaluation.continuation2 as continuation
-from evaluation.continuation2 import SpotifyDataset, FeatureSetBuilder
-from evaluation.crossmodal_retrieval import t2a, a2t
+# import evaluation.continuation2 as continuation
+import evaluation.continuation_full as continuation
+# from evaluation.continuation2 import SpotifyDataset, FeatureSetBuilder
+from evaluation.continuation_full import SpotifyDataset, FeatureSetBuilder
+# from evaluation.crossmodal_retrieval import t2a, a2t
 
 import scipy.sparse as sp
 
@@ -226,7 +225,7 @@ def distributed_main(rank, world_size, args):
     utils.setup_seed(args.seed + rank)
 
     #load parameters 
-    config = yaml.safe_load(open('/home/rebecca/BLAP_test/configs/config2.yaml', 'r'))
+    config = yaml.safe_load(open(args.config_path, 'r'))
     base_config = config['MODELS']['BASE_MODELS'][args.base_model]
     audio_config = config['MODELS']['AUDIO_MODELS'][args.audio_model]
     text_config = config['MODELS']['LANGUAGE_MODELS'][args.text_model]

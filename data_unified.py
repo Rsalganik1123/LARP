@@ -205,14 +205,14 @@ class CF_WaveformDataset(Dataset):
 
 class Datasets(): 
     def __init__(self, args, config, split=True): 
-        self.config = config['MODELS']['BASE_MODELS']['BLAP'] 
+        self.config = config['MODELS']['BASE_MODELS']['LARP'] 
         self.audio_config = config['MODELS']['AUDIO_MODELS'][args.audio_model.upper()]
         batch_size = config['cmdline']['batch_size']
         num_tasks = utils.get_world_size()
         global_rank = utils.get_rank()  
         
 
-        if args.mode == 'train': #Training BLAP from scratch 
+        if args.mode == 'train': #Training LARP from scratch 
             self.train_dataset = WaveformDataset(args, config, split='train')
             self.valid_dataset = WaveformDataset(args, config, split='valid')
             self.test_dataset  = WaveformDataset(args, config, split='test')
