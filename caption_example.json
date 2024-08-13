@@ -1,1 +1,3 @@
-["the song Weird Fishes by Radiohead"]
+[
+    {"audio_file": "audio_example.mp3", 
+    "caption": "the song Weird Fishes by Radiohead"}]

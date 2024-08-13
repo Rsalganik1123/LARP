@@ -18,15 +18,24 @@ If you use this codebase please cite us using:
 
 # Table of Contents 
 - Building environment 
-- Building datasets from scratch 
-- Accessing checkpoints 
-- Training the models 
+- Running pre-trained model on your data 
+- Building our datasets from scratch  
+ 
 
 # Building Environment
 We find that installing in two phases was most effective for package compatibility. 
 1. Run ``` conda env create --name envname --file=/KDD2024-LARP/environment_setup/conda.yml```
 2. Activate env. Run ```pip install  /KDD2024-LARP/environment_setup/pip.txt ``` 
  
+# Running pre-trained model on your data  
+1. We have added two sample files to provide examples of the format required by our model. Audio files should be stored in .mp3 format and captions should be saved in a .json file that contains all the stri
+1. Start by downloading the pre-trained HTSAT checkpoint at https://drive.google.com/drive/folders/1SMQyzJvc6DwJNuhQ_WI8tlCFL5HG2vk6. Then go into the ```/KDD2024-LARP/configs/config2.yaml``` file and manually change the path under ```MODELS>AUDIO_MODELS>HTSAT>checkpoint``` entry. 
+2. Download our checkpoints from: <TBD>
+3. Manually input your audio and caption folders inside the ```run_pretrained.py``` file 
+4. Launch: ```python run_pretrained.py --checkpoint <checkpoint path>```
+
+
+
 
 # Dataset Building 
 Unfortunately, due to legal restrictions we cannot post the mp3 files that were used during our training. However, we provide all of the elements necessary to recreate our code exactly. If you have any issues please feel free to reach out to our primary author, Rebecca Salganik. 
@@ -109,8 +118,3 @@ project_folder
 		| ... 
 ```
 
-# Accessing Checkpoints 
-TBD
-
-# Training from Scratch 
-TBD

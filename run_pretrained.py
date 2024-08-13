@@ -21,15 +21,15 @@ from models.larp import LARP
 
 
 
-def load_embeddings_from_folder(model, device, audio_folder, caption_file):
-    all_files = glob(audio_folder + '*.mp3')
-    json.load(open('caption_example.json', 'r'))
+def load_embeddings_from_folder(model, device, caption_file):
+    # ajson.load(open('caption_example.json', 'r'))
     audio_emb, caption_emb = [], [] 
+    all_files = pd.read_json(caption_file)
     with tqdm(desc=f'loading emb', unit='it', total=len(all_files), ) as pbar:
-        for i, (audio_file) in enumerate(all_files): 
+        for i, (audio_file) in enumerate(all_files.audio_files.tolist()): 
             audio, sr = torchaudio.load(audio_file)
             audio = audio.reshape(1, -1).to(device)
-            caption = caption_file[i]
+            caption = all_files.caption.tolist()[i]
             a, c = model.return_features(audio, caption)
             audio_emb.append(a)
             caption_emb.append(c)
@@ -68,12 +68,12 @@ if __name__ == '__main__':
     state_dict = checkpoint['model']    
     model.load_state_dict(state_dict, strict=False)
     
-    audio_path = '/home/xhliu/KDD2024-LARP/audio_example.mp3'
+    audio_path = '/KDD2024-LARP/audio_example.mp3'
     caption = 'Hello, thanks for using LARP!'
 
     audio_emb, caption_emb = load_embedding_from_file(model, device, audio_path, caption)
     
-    audio_folder = '/home/xhliu/KDD2024-LARP/'
-    caption_file = '/home/xhliu/KDD2024-LARP/caption_example.json'
+    audio_folder = '/KDD2024-LARP/'
+    caption_file = '/KDD2024-LARP/caption_example.json'
 
     audio_emb, caption_emb = load_embeddings_from_folder(model, device, audio_path, caption)
