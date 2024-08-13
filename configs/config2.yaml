@@ -1,4 +1,4 @@
-MODELS:
+MODELS: #PLACE CHECKPOINT FOR HTSAT BELOW 
   AUDIO_MODELS:
     HTSAT: 
       batch_size: 50 
@@ -23,14 +23,7 @@ MODELS:
       model_type: "HTSAT"
       model_name: "tiny"
       checkpoint: '/home/xhliu/BLAP_test/models/HTSAT-fullset-imagenet-tiny-map=0.467.ckpt'
-      PRETRAINED_FEATURES: 
-        MPD: 
-          AUDIO: '/mnt/ssd1/rebecca/spotify_clean/benchmark_feat/htsat_feat/test/features.pt'
-          URIS: '/mnt/ssd1/rebecca/spotify_clean/benchmark_feat/htsat_feat/test/uris.pkl'
-        LFM: 
-          AUDIO: '/mnt/ssd1/rebecca/lfm/benchmark_feat/htsat_feat/features.pt'
-          URIS: '/mnt/ssd1/rebecca/lfm/benchmark_feat/htsat_feat/uris.pkl'
-
+      
   LANGUAGE_MODELS: 
     BERT: #configuration parameters for BERT text backbone model 
       architectures: ["BertModel"]
@@ -89,43 +82,34 @@ EVALUATION:
     lr: 1e-3
     l2_reg: 1e-4
     test_interval: 1
-    MPD: 
-      train: '/mnt/ssd1/rebecca/spotify_clean/evaluation_sets/bundle/'
-      valid: '/mnt/ssd1/rebecca/spotify_clean/evaluation_sets/bundle/'
-      test: '/mnt/ssd1/rebecca/spotify/toy_set/evaluation_sets/bundle/test_ori2/'
-    LFM: 
-      train: '/mnt/ssd1/rebecca/lfm/evaluation_sets/bundle/'
-      valid: '/mnt/ssd1/rebecca/lfm/evaluation_sets/bundle/' 
-      test: '/mnt/ssd1/rebecca/lfm/evaluation_sets/bundle/'  
-  
-  
-
-DATASETS: 
+     
+DATASETS: #CHANGE FILE PATHS BELOW 
   MPD: 
     id_key: 'track_uri'
     TOY_SET: 
-      org_filepath: '/mnt/ssd1/rebecca/spotify/toy_set/caption_sets/train_captions.pkl' 
-      train: '/mnt/ssd1/rebecca/spotify/toy_set/caption_sets/train_captions.pkl'
-      valid: '/mnt/ssd1/rebecca/spotify/toy_set/caption_sets/valid_captions.pkl'
-      test: '/mnt/ssd1/rebecca/spotify/toy_set/caption_sets/test_captions.pkl'
+      org_filepath: '/spotify/caption_sets/train_captions.pkl' 
+      train: '/spotify/caption_sets/train_captions.pkl'
+      valid: '/spotify/caption_sets/valid_captions.pkl'
+      test: '/spotify/caption_sets/test_captions.pkl'
       CIC:
-        pair_dataset_path: '/mnt/ssd1/rebecca/spotify/toy_set/pair_sets/5_pairs.pkl'
-        pair_dataset_path_resnet: '/home/rebecca/BLAP_test/dataset_build/playlist_track_pairs/pt_pairs.pkl'
+        pair_dataset_path: '/spotify/pair_sets/5_pairs.pkl'
+        pair_dataset_path_resnet: '/spotify/pair_sets/pt_pairs.pkl'
       CIP: 
-        pair_dataset_path: '/mnt/ssd1/rebecca/spotify/toy_set/pair_sets/5_pairs_cip.pkl'
+        pair_dataset_path: '/spotify/pair_sets/5_pairs_cip.pkl'
+        sequences_dataset_path: '/spotify/pair_sets/MPD_p_seq.pt'
   LFM: 
     id_key: 'track_uri'
     TOY_SET: 
-      org_filepath: '/mnt/ssd1/rebecca/lfm/caption_sets/train_captions_cleaned.pkl' 
-      train: '/mnt/ssd1/rebecca/lfm/caption_sets/train_captions_cleaned.pkl' 
-      valid: '/mnt/ssd1/rebecca/lfm/caption_sets/valid_captions_cleaned.pkl' 
-      test: '/mnt/ssd1/rebecca/lfm/caption_sets/test_captions_cleaned.pkl' 
-      session: '/mnt/ssd1/rebecca/lfm/caption_sets/test_captions_session.pkl' 
-      trunc: '/mnt/ssd1/rebecca/lfm/caption_sets/test_captions_trunc.pkl' 
+      org_filepath: '/lfm/caption_sets/train_captions_cleaned.pkl' 
+      train: '/lfm/caption_sets/train_captions_cleaned.pkl' 
+      valid: '/lfm/caption_sets/valid_captions_cleaned.pkl' 
+      test: '/lfm/caption_sets/test_captions_cleaned.pkl' 
+      session: '/lfm/caption_sets/test_captions_session.pkl' 
+      trunc: '/lfm/caption_sets/test_captions_trunc.pkl' 
       CIC:
-        pair_dataset_path: '/mnt/ssd1/rebecca/lfm/pair_sets/5_pairs.pkl'
+        pair_dataset_path: '/lfm/pair_sets/5_pairs.pkl'
       CIP:
-        pair_dataset_path: '/mnt/ssd1/rebecca/lfm/pair_sets/5_pairs.pkl'
-        sequences_dataset_path: '/mnt/ssd1/rebecca/lfm/pair_sets/LFM_p_seq.pt'
+        pair_dataset_path: '/lfm/pair_sets/5_pairs.pkl'
+        sequences_dataset_path: '/lfm/pair_sets/LFM_p_seq.pt'
   
 

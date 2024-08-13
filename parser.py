@@ -7,26 +7,7 @@ def parse_feature_gen_args():
     parser.add_argument('--output_path', type='str')
 
 
-def vicuna_parse_args(): 
-    parser = argparse.ArgumentParser()
-    add_model_args(parser)
-    parser.add_argument(
-        "--conv-template", type=str, default=None, help="Conversation prompt template."
-    )
-    parser.add_argument("--temperature", type=float, default=0.001)
-    parser.add_argument("--max-new-tokens", type=int, default=128)
-    parser.add_argument("--debug", action="store_true")
-    parser.add_argument("--message", type=str, default="Hello! Who are you?")
 
-    parser.add_argument('--input_path', type=str, default='/home/rebecca/vicuna_caption_info.json',
-                        help='input json')
-    parser.add_argument('--output_path', type=str, default='/ssd1/ccye/vicuna-event/',
-                        help='output data directory')
-    parser.add_argument('--split', type=str, default='all')
-
-
-    args = parser.parse_args()
-    return args
 
 
 import argparse 
@@ -55,7 +36,7 @@ def parse_args(no_cmd=False):
     #Predefined Hyperparameters --> change once 
     parser.add_argument('--log_base', default = '/home/rebecca/rebecca_workplace/TENSORBOARD', help='folder path for storing logs')
     parser.add_argument('--dataset_path', type=str, default='/mnt/ssd1/rebecca/', help='location where data is stored, see README for required file structure')
-    parser.add_argument('--config_path', type=str, default='/home/rebecca/KDD2024-LARP/configs/config2.yaml', help='hyperparameter settings')
+    parser.add_argument('--config_path', type=str, default='/home/xhliu/KDD2024-LARP/configs/config2.yaml', help='hyperparameter settings')
     parser.add_argument('--checkpoint', type=str, default=None, help='path for storing checkpoints')
     parser.add_argument('--master_port', required=False, type=str, default="12355", help='if you launch multiple distributed runs, you will need to change this')
     
