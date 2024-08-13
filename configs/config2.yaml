@@ -62,7 +62,7 @@ MODELS:
       class_num: 527
       model_type: "HTSAT"
       model_name: "tiny"
-      checkpoint: '/home/rebecca/BLAP_test/models/HTSAT-fullset-imagenet-tiny-map=0.467.ckpt'
+      checkpoint: '/home/xhliu/BLAP_test/models/HTSAT-fullset-imagenet-tiny-map=0.467.ckpt'
       PRETRAINED_FEATURES: 
         MPD: 
           AUDIO: '/mnt/ssd1/rebecca/spotify_clean/benchmark_feat/htsat_feat/test/features.pt'
@@ -270,14 +270,3 @@ DATASETS:
 
 
 
-# #CLEAN UP LATER -- FOR NOW I NEED IT FOR COMPATIBILITY 
-# BUNDLE: 
-#   batch_size: 10
-#   valid: '/mnt/ssd1/rebecca/spotify/toy_set/evaluation_sets/bundle/test/'
-#   test: '/mnt/ssd1/rebecca/spotify/toy_set/evaluation_sets/bundle/test/'
-  
-  
-# REC:
-#   topk: [1, 5, 10, 20]
-#   validation_metric: 'recall'
-#   validation_index: 20
