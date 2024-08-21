@@ -30,7 +30,7 @@ We find that installing in two phases was most effective for package compatibili
 # Running pre-trained model on your data  
 1. We have added two sample files to provide examples of the format required by our model. Audio files should be stored in .mp3 format and captions should be saved in a .json file that contains all the stri
 1. Start by downloading the pre-trained HTSAT checkpoint at https://drive.google.com/drive/folders/1SMQyzJvc6DwJNuhQ_WI8tlCFL5HG2vk6. Then go into the ```/KDD2024-LARP/configs/config2.yaml``` file and manually change the path under ```MODELS>AUDIO_MODELS>HTSAT>checkpoint``` entry. 
-2. Download our checkpoints from: <TBD>
+2. Download our checkpoints from: /home/xhliu/KDD2024-LARP 
 3. Manually input your audio and caption folders inside the ```run_pretrained.py``` file 
 4. Launch: ```python run_pretrained.py --checkpoint <checkpoint path>```
 
