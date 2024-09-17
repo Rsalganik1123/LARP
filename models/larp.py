@@ -11,7 +11,7 @@ import transformers
 transformers.logging.set_verbosity_error()
 from typing import List
 import os 
-os.environ['TORCH_HOME'] = '/storage/rebecca/BLAP_test/models/'
+os.environ['TORCH_HOME'] = '/storage/xhliu/BLAP_test/models/'
 import torch
 from torch import nn
 import torch.nn.functional as F
